@@ -4,12 +4,12 @@ use rstest::rstest;
 use serde_json::Value;
 use tket_json_rs::SerialCircuit;
 
-const SIMPLE: &str = include_str!("data/simple.json");
-const CLASSICAL: &str = include_str!("data/classical.json");
-const DIAGONAL: &str = include_str!("data/diagonal-box.json");
-const QASM: &str = include_str!("data/qasm.json");
-const WASM: &str = include_str!("data/wasm.json");
-const RNG: &str = include_str!("data/rng.json");
+const SIMPLE: &str = include_str!("data/circuit/simple.json");
+const CLASSICAL: &str = include_str!("data/circuit/classical.json");
+const DIAGONAL: &str = include_str!("data/circuit/diagonal-box.json");
+const QASM: &str = include_str!("data/circuit/qasm.json");
+const WASM: &str = include_str!("data/circuit/wasm.json");
+const RNG: &str = include_str!("data/circuit/rng.json");
 
 /// Cleanup some fields in the JSON so that we can compare them.
 fn normalize_json(json: &mut Value) {
