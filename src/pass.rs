@@ -37,7 +37,7 @@ pub type Predicate = serde_json::Value;
 //
 // Hence the non-standard structure of the enum.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
+#[derive(Deserialize, Serialize, Clone, Debug, PartialEq, derive_more::From)]
 #[serde(tag = "pass_class")]
 pub enum BasePass {
     /// A standard pass.
