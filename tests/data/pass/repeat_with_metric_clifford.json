@@ -1,0 +1,14 @@
+{
+  "RepeatWithMetricPass": {
+    "body": {
+      "StandardPass": {
+        "allow_swaps": true,
+        "name": "CliffordSimp",
+        "target_2qb_gate": "CX"
+      },
+      "pass_class": "StandardPass"
+    },
+    "metric": "SERIALIZATION OF METRICS NOT YET IMPLEMENTED"
+  },
+  "pass_class": "RepeatWithMetricPass"
+}
