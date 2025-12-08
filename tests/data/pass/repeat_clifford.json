@@ -1,0 +1,13 @@
+{
+  "RepeatPass": {
+    "body": {
+      "StandardPass": {
+        "allow_swaps": true,
+        "name": "CliffordSimp",
+        "target_2qb_gate": "CX"
+      },
+      "pass_class": "StandardPass"
+    }
+  },
+  "pass_class": "RepeatPass"
+}

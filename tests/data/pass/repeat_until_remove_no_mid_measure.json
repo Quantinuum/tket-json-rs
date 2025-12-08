@@ -1,0 +1,14 @@
+{
+  "RepeatUntilSatisfiedPass": {
+    "body": {
+      "StandardPass": {
+        "name": "RemoveBarriers"
+      },
+      "pass_class": "StandardPass"
+    },
+    "predicate": {
+      "type": "NoMidMeasurePredicate"
+    }
+  },
+  "pass_class": "RepeatUntilSatisfiedPass"
+}

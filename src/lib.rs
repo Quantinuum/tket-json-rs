@@ -6,6 +6,7 @@ pub mod circuit_json;
 pub mod clexpr;
 pub mod opbox;
 pub mod optype;
+pub mod pass;
 #[cfg(feature = "pyo3")]
 pub mod pytket;
 pub mod register;

@@ -1,0 +1,21 @@
+{
+  "SequencePass": {
+    "sequence": [
+      {
+        "StandardPass": {
+          "allow_swaps": true,
+          "name": "CliffordSimp",
+          "target_2qb_gate": "CX"
+        },
+        "pass_class": "StandardPass"
+      },
+      {
+        "StandardPass": {
+          "name": "RemoveBarriers"
+        },
+        "pass_class": "StandardPass"
+      }
+    ]
+  },
+  "pass_class": "SequencePass"
+}
