@@ -36,6 +36,9 @@ pub type Predicate = serde_json::Value;
 // same name as the pass class).
 //
 // Hence the non-standard structure of the enum.
+//
+// NOTE: The pytket schema defines serializations for `RepeatWithMetricPass`,
+// but it is not actually supported by pytket so we have removed it here.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq, derive_more::From)]
 #[serde(tag = "pass_class")]
@@ -57,12 +60,6 @@ pub enum BasePass {
         /// The pass data.
         #[serde(rename = "RepeatPass")]
         pass: RepeatPass,
-    },
-    /// A pass that iterates an internal pass whilst some metric decreases.
-    RepeatWithMetricPass {
-        /// The pass data.
-        #[serde(rename = "RepeatWithMetricPass")]
-        pass: RepeatWithMetricPass,
     },
     /// A pass that iterates an internal pass until some predicate is satisfied.
     RepeatUntilSatisfiedPass {
@@ -86,17 +83,6 @@ pub struct SequencePass {
 pub struct RepeatPass {
     /// The body of the loop, to be iterated until no further change.
     pub body: Box<BasePass>,
-}
-
-/// A pass that iterates an internal pass whilst some metric decreases.
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct RepeatWithMetricPass {
-    /// The body of the loop.
-    pub body: Box<BasePass>,
-    /// The metric that conditions the loop,
-    /// stored as a dill string of the python function.
-    pub metric: String,
 }
 
 /// A pass that iterates an internal pass until some predicate is satisfied.

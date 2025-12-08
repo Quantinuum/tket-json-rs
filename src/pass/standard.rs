@@ -7,20 +7,20 @@ use serde::{Deserialize, Serialize};
 use crate::pass::{Architecture, Placement};
 use crate::{register::ElementId, SerialCircuit};
 
-/// A standard pass.
+/// A serialized standard pass.
+//
+// NOTE: The pytket schema defines serializations for `SquashCustom` and
+// `RebaseCustom`, but they are not actually supported by pytket so we have
+// removed them here.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
 #[serde(tag = "name")]
 #[non_exhaustive]
 pub enum StandardPass {
-    /// A pass that re-bases the circuit to a custom basis.
-    RebaseCustom(RebaseCustom),
     /// A convenience custom rebase that targets TK2.
     RebaseCustomViaTK2,
     /// Automatically rebase to a given gate set.
     AutoRebase(AutoRebase),
-    /// Custom squash configuration.
-    SquashCustom(SquashCustom),
     /// Automatically squash single-qubit gates.
     AutoSquash(AutoSquash),
     /// Commute multi-qubit gates past other operations.
@@ -133,19 +133,6 @@ pub enum StandardPass {
     FlattenRelabelRegistersPass(FlattenRelabelRegistersPass),
 }
 
-/// A pass that re-bases the circuit to a custom basis.
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct RebaseCustom {
-    /// OpTypes of supported gates.
-    pub basis_allowed: Vec<String>,
-    /// A circuit implementing a CX gate in a target gate set.
-    pub basis_cx_replacement: Box<SerialCircuit>,
-    /// A method for generating optimised single-qubit unitary circuits in a target gate set.
-    /// This string should be interpreted by Python "dill" into a function.
-    pub basis_tk1_replacement: String,
-}
-
 /// Automatically rebase to a given gate set.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
@@ -154,18 +141,6 @@ pub struct AutoRebase {
     pub basis_allowed: Vec<String>,
     /// Whether swaps can be introduced while rebasing.
     pub allow_swaps: bool,
-}
-
-/// Custom squashing configuration.
-#[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct SquashCustom {
-    /// OpTypes of supported single-qubit gates.
-    pub basis_singleqs: Vec<String>,
-    /// Dill-encoded TK1 replacement method.
-    pub basis_tk1_replacement: String,
-    /// Whether symbolic gates are always squashed.
-    pub always_squash_symbols: bool,
 }
 
 /// Automatically squash single-qubit gates.

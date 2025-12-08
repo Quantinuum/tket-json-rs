@@ -7,7 +7,6 @@ use tket_json_rs::pass::{BasePass, SequencePass};
 const STANDARD_CLIFFORD_SIMP: &str = include_str!("data/pass/standard_clifford_simp.json");
 const SEQUENCE: &str = include_str!("data/pass/sequence_clifford_remove.json");
 const REPEAT: &str = include_str!("data/pass/repeat_clifford.json");
-const REPEAT_WITH_METRIC: &str = include_str!("data/pass/repeat_with_metric_clifford.json");
 const REPEAT_UNTIL: &str = include_str!("data/pass/repeat_until_remove_no_mid_measure.json");
 
 #[test]
@@ -63,17 +62,6 @@ fn repeat_clifford_roundtrip() {
 
     let roundtrip: BasePass = serde_json::from_value(reencoded_json).unwrap();
     assert_eq!(pass, roundtrip);
-}
-
-#[test]
-fn repeat_with_metric_clifford_roundtrip() {
-    let initial_json: Value = serde_json::from_str(REPEAT_WITH_METRIC).unwrap();
-    let pass: BasePass = serde_json::from_value(initial_json.clone()).unwrap();
-
-    assert!(matches!(&pass, BasePass::RepeatWithMetricPass { .. }));
-
-    let reencoded_json = serde_json::to_value(&pass).unwrap();
-    assert_json_eq!(reencoded_json, initial_json);
 }
 
 #[test]
