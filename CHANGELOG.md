@@ -1,5 +1,13 @@
 # Release notes
 
+## 0.8.0 (2025-12-08)
+
+### Features
+
+- Add definitions for BasePass ([#161](https://github.com/Quantinuum/tket-json-rs/issues/161))
+- [**breaking**] Update pyo3 to 0.27 ([#166](https://github.com/Quantinuum/tket-json-rs/issues/166))
+
+
 ## 0.7.7 (2025-10-23)
 
 ### Features
