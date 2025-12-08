@@ -7,7 +7,7 @@ rust-version = "1.75"
 
 readme = "README.md"
 documentation = "https://docs.rs/tket-json-rs/"
-repository = "https://github.com/CQCL/tket-json-rs"
+repository = "https://github.com/Quantinuum/tket-json-rs"
 
 description = "Serializable definition of TKET circuits and operations."
 keywords = ["tket", "quantinuum", "quantum"]

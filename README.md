@@ -1,13 +1,13 @@
 tket-json-rs
 ============
 
-[![build_status][]](https://github.com/CQCL/tket-json-rs/actions)
+[![build_status][]](https://github.com/Quantinuum/tket-json-rs/actions)
 [![crates][]](https://crates.io/crates/tket-json-rs)
-[![msrv][]](https://github.com/CQCL/tket-json-rs)
+[![msrv][]](https://github.com/Quantinuum/tket-json-rs)
 [![docs][]](https://docs.rs/tket-json-rs)
 
 Serializable Rust definition for circuits and operations of the
-[TKET](https://github.com/CQCL/tket) quantum compiler.
+[TKET](https://github.com/Quantinuum/tket) quantum compiler.
 
 ## Features
 
@@ -22,7 +22,7 @@ version will only change on major releases.
 
 This project is licensed under Apache License, Version 2.0 ([LICENSE][] or http://www.apache.org/licenses/LICENSE-2.0).
 
-  [build_status]: https://github.com/CQCL/tket-json-rs/workflows/Continuous%20integration/badge.svg?branch=main
+  [build_status]: https://github.com/Quantinuum/tket-json-rs/workflows/Continuous%20integration/badge.svg?branch=main
   [docs]: https://img.shields.io/docsrs/tket-json-rs/latest
   [crates]: https://img.shields.io/crates/v/tket-json-rs
   [LICENSE]: LICENCE
