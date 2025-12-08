@@ -21,7 +21,7 @@ where
     T: FromStr,
 {
     let py_members = py_enum.getattr("__members__").unwrap();
-    let py_members = py_members.downcast::<PyDict>().unwrap();
+    let py_members = py_members.cast::<PyDict>().unwrap();
 
     py_members.into_iter().filter_map(|(name, _class)| {
         let name = name.extract::<String>().unwrap();
