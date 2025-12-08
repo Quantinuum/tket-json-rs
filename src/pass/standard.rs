@@ -68,7 +68,7 @@ pub enum StandardPass {
     /// Decompose bridge gadgets.
     DecomposeBridges,
     /// Run the KAK decomposition.
-    KAKDecomposition(KakDecomposition),
+    KAKDecomposition(KAKDecomposition),
     /// Squash arbitrary three-qubit unitaries.
     ThreeQubitSquash(ThreeQubitSquash),
     /// Full peephole optimisation.
@@ -90,7 +90,7 @@ pub enum StandardPass {
     /// Clifford simplification.
     CliffordSimp(CliffordSimp),
     /// Decompose swaps into CXs.
-    DecomposeSwapsToCXs(DecomposeSwapsToCxs),
+    DecomposeSwapsToCXs(DecomposeSwapsToCXs),
     /// Decompose swaps into custom circuits.
     DecomposeSwapsToCircuit(DecomposeSwapsToCircuit),
     /// Optimise phase gadgets.
@@ -110,13 +110,13 @@ pub enum StandardPass {
     /// Default mapping pipeline.
     DefaultMappingPass(DefaultMappingPass),
     /// CX-focused mapping pipeline.
-    CXMappingPass(CxMappingPass),
+    CXMappingPass(CXMappingPass),
     /// Pauli squashing.
     PauliSquash(PauliSynthesisConfig),
     /// Context simplification.
     ContextSimp(ContextSimp),
     /// Decompose TK2 gates.
-    DecomposeTK2(DecomposeTk2),
+    DecomposeTK2(DecomposeTK2),
     /// Pairwise decomposition of CnX.
     CnXPairwiseDecomposition,
     /// Remove implicit permutation annotations.
@@ -203,7 +203,7 @@ pub struct PeepholeOptimise2Q {
 /// KAK decomposition configuration.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct KakDecomposition {
+pub struct KAKDecomposition {
     /// Fidelity threshold to preserve semantics.
     pub fidelity: f64,
     /// Whether swaps are allowed during optimisation.
@@ -307,7 +307,7 @@ pub struct CliffordSimp {
 /// Decompose swaps into CXs.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct DecomposeSwapsToCxs {
+pub struct DecomposeSwapsToCXs {
     /// Target architecture.
     pub architecture: Architecture,
     /// Whether the architecture edges are directed.
@@ -378,7 +378,7 @@ pub struct DefaultMappingPass {
 /// CX-focused mapping configuration.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct CxMappingPass {
+pub struct CXMappingPass {
     /// Target architecture.
     pub architecture: Architecture,
     /// Placement configuration.
@@ -404,10 +404,14 @@ pub struct ContextSimp {
 /// Decompose TK2 configuration.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct DecomposeTk2 {
+pub struct DecomposeTK2 {
     /// Optional fidelity hints.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub fidelities: Option<DecomposeTk2Fidelities>,
+    pub fidelities: Option<DecomposeTK2Fidelities>,
+    /// Whether to allow swaps.
+    ///
+    /// NOTE: This field is missing from the pytket schema.
+    pub allow_swaps: bool,
 }
 
 /// Round angles configuration.
@@ -453,13 +457,14 @@ pub struct DelayMeasures {
 }
 
 /// Flatten and relabel registers configuration.
+///
+/// NOTE: The pytket schema declares an additional `relabel_classical_registers`
+/// field that is not actually present in the pass definition.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
 pub struct FlattenRelabelRegistersPass {
     /// Label to assign to flattened registers.
     pub label: String,
-    /// Whether classical registers should also be relabelled.
-    pub relabel_classical_registers: bool,
 }
 
 /*
@@ -487,7 +492,7 @@ pub struct RoutingMethod {
 /// Configuration for decomposing TK2 gates.
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[derive(Deserialize, Serialize, Clone, Debug, PartialEq)]
-pub struct DecomposeTk2Fidelities {
+pub struct DecomposeTK2Fidelities {
     /// Optional CX fidelity.
     #[serde(rename = "CX", skip_serializing_if = "Option::is_none")]
     pub cx: Option<f64>,
@@ -531,6 +536,10 @@ pub enum CxConfig {
     Tree,
     /// Star configuration.
     Star,
+    /// Support for multi-qubit architectures, decomposing to 3-qubit XXPhase3 gates instead of CXs where possible.
+    ///
+    /// NOTE: This field is missing from the pytket schema.
+    MultiQGate,
 }
 
 /// Strategy for synthesising Pauli gadgets.
@@ -540,7 +549,17 @@ pub enum PauliSynthStrategy {
     /// Synthesise gadgets individually.
     Individual,
     /// Synthesise gadgets pairwise.
+    ///
+    /// Based on Cowtan et. al. <https://arxiv.org/abs/1906.01734>
     Pairwise,
     /// Synthesise gadgets in commuting sets.
     Sets,
+    /// Synthesise gadgets using a greedy algorithm adapted from <https://arxiv.org/abs/2103.08602>.
+    ///
+    /// This strategy is currently only accepted by TermSequenceBox. For synthesising general circuits try using GreedyPauliSimp.
+    ///
+    /// WARNING: This strategy will not preserve the global phase of the circuit.
+    ///
+    /// NOTE: This field is missing from the pytket schema.
+    Greedy,
 }
