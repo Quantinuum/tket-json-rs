@@ -29,7 +29,7 @@ jobs:
       should_notify: ${{ steps.check_missing_optypes.outputs.fail }}
       diagnostic: ${{ steps.check_missing_optypes.outputs.diagnostic }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: mozilla-actions/sccache-action@v0.0.9
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -63,7 +63,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
   create-issue:
-    uses: CQCL/hugrverse-actions/.github/workflows/create-issue.yml@main
+    uses: Quantinuum/hugrverse-actions/.github/workflows/create-issue.yml@main
     needs: missing-optypes
     if: ${{ needs.missing-optypes.outputs.should_notify == 'true' && ( github.event_name == 'schedule' || github.event_name == 'push' ) }}
     with:
@@ -75,7 +75,7 @@ jobs:
             ${{ needs.missing-optypes.outputs.diagnostic }}
             ```
 
-            See [https://github.com/CQCL/tket-json-rs/actions/runs/${{ github.run_id }}](the failing check) for more info.
+            See [https://github.com/Quantinuum/tket-json-rs/actions/runs/${{ github.run_id }}](the failing check) for more info.
         unique-label: "missing-ops"
         other-labels: "bug"
     secrets:

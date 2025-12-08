@@ -1,6 +1,6 @@
 #![warn(missing_docs)]
 //! Serializable Rust definition for circuits and operations of the
-//! [TKET](https://github.com/CQCL/tket) quantum compiler.
+//! [TKET](https://github.com/Quantinuum/tket) quantum compiler.
 
 pub mod circuit_json;
 pub mod clexpr;
