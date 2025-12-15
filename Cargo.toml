@@ -41,7 +41,7 @@ name = "integration"
 path = "tests/lib.rs"
 
 [workspace.dependencies]
-derive_more = "2.0.1"           # derive_more 2.1.0 requires rust 1.81
+derive_more = "2.1.0"           # derive_more 2.1.0 requires rust 1.81
 itertools = "0.14.0"
 pyo3 = ">= 0.27.0, < 0.28"
 pythonize = ">= 0.27.0, < 0.28"
