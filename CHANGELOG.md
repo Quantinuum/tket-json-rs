@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.8.1 (2026-03-02)
+
+### Features
+
+- Update to pyket 2.14.0 and add new op types ([#173](https://github.com/Quantinuum/tket-json-rs/issues/173))
+
+
 ## 0.8.0 (2025-12-08)
 
 ### Features
