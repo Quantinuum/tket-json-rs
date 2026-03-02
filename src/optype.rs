@@ -595,4 +595,21 @@ pub enum OpType {
 
     /// Get 32-bit (little-endian) shot number
     JobShotNum,
+
+    /// Apply [`OpType::PhasedX`] to two qubits.
+    ///
+    /// \f$ (\\alpha, \\beta) \\mapsto \\mathrm{PhasedX}(\\alpha, \\beta)
+    /// \\otimes \\mathrm{PhasedX}(\\alpha, \\beta) \f$
+    TwinPhasedX,
+
+    /// Apply [`OpType::XXPhase`] conjugated by Z-rotations.
+    ///
+    /// \f$ (\\alpha, beta) \\mapsto \\mathrm{AAMS}(\\alpha, -\\beta, -\\beta)
+    /// = \\left[ \\begin{array}{cccc} \\cos\\frac{\\pi\\alpha}{2} & 0 & 0 &
+    /// -i\\sin\\frac{\\pi\\alpha}{2} e^{2i\\pi\\beta} \\\\ 0 &
+    /// \\cos\\frac{\\pi\\alpha}{2} & -i\\sin\\frac{\\pi\\alpha}{2} & 0 \\\\ 0 &
+    /// -i\\sin\\frac{\\pi\\alpha}{2} & \\cos\\frac{\\pi\\alpha}{2} & 0 \\\\
+    /// -i\\sin\\frac{\\pi\\alpha}{2} e^{-2i\\pi\\beta} & 0 & 0 &
+    /// \\cos\\frac{\\pi\\alpha}{2} \\end{array} \\right] \f$
+    PhasedXX,
 }
