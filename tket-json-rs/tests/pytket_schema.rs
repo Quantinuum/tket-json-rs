@@ -1,3 +1,5 @@
+//! Tests for the pytket schema.
+
 #[cfg(feature = "schemars")]
 mod schema_tests {
     use std::fs::File;

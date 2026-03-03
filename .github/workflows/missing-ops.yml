@@ -10,7 +10,7 @@ on:
   workflow_dispatch: {}
   schedule:
     # 08:00 daily
-    - cron: '0 8 * * *'
+    - cron: "0 8 * * *"
 
 env:
   CARGO_TERM_COLOR: always
@@ -48,7 +48,7 @@ jobs:
         id: check_missing_optypes
         run: |
           set +e
-          uv run -- cargo test --test integration -- --ignored missing_optypes --nocapture --test-threads=1 > missing_optypes.txt
+          uv run -- cargo test -p tket-json-rs --test integration -- --ignored missing_optypes --nocapture --test-threads=1 > missing_optypes.txt
           cat missing_optypes.txt
           echo
           if [ $? -eq 0 ]; then
@@ -67,16 +67,16 @@ jobs:
     needs: missing-optypes
     if: ${{ needs.missing-optypes.outputs.should_notify == 'true' && ( github.event_name == 'schedule' || github.event_name == 'push' ) }}
     with:
-        title: "`tket-json-rs` is missing OpType definitions."
-        body: |
-            ⚠️ `tket-json-rs` is missing OpType definitions.
+      title: "`tket-json-rs` is missing OpType definitions."
+      body: |
+        ⚠️ `tket-json-rs` is missing OpType definitions.
 
-            ```
-            ${{ needs.missing-optypes.outputs.diagnostic }}
-            ```
+        ```
+        ${{ needs.missing-optypes.outputs.diagnostic }}
+        ```
 
-            See [https://github.com/Quantinuum/tket-json-rs/actions/runs/${{ github.run_id }}](the failing check) for more info.
-        unique-label: "missing-ops"
-        other-labels: "bug"
+        See [https://github.com/Quantinuum/tket-json-rs/actions/runs/${{ github.run_id }}](the failing check) for more info.
+      unique-label: "missing-ops"
+      other-labels: "bug"
     secrets:
-        GITHUB_PAT: ${{ secrets.HUGRBOT_PAT }}
+      GITHUB_PAT: ${{ secrets.HUGRBOT_PAT }}

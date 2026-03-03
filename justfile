@@ -22,4 +22,4 @@ fix:
 # Check for missing optypes
 check-optypes:
     uv sync
-    uv run -- cargo test -- --ignored missing_optypes
+    uv run -- cargo test -p tket-json-rs -- --ignored missing_optypes
