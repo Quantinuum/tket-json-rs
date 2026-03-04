@@ -13,12 +13,12 @@ repos:
       - id: end-of-file-fixer
         exclude: |
           (?x)^(
-            tests/data/.*
+            tket-json-rs/tests/data/.*
           )$
       - id: trailing-whitespace
         exclude: |
           (?x)^(
-            tests/data/.*
+            tket-json-rs/tests/data/.*
           )$
       - id: fix-byte-order-marker
       - id: mixed-line-ending

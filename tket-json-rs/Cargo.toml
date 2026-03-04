@@ -1,0 +1,45 @@
+[package]
+name = "tket-json-rs"
+version = "0.8.1"
+license = { workspace = true }
+edition = { workspace = true }
+rust-version = { workspace = true }
+homepage = { workspace = true }
+repository = { workspace = true }
+
+readme = "README.md"
+documentation = "https://docs.rs/tket-json-rs/"
+
+description = "Serializable definition of TKET circuits and operations."
+keywords = ["tket", "quantinuum", "quantum"]
+categories = ["compilers"]
+
+[lib]
+name = "tket_json_rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+derive_more = { workspace = true, features = ["display", "from"] }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+uuid = { workspace = true, features = ["serde", "v4"] }
+pyo3 = { workspace = true, optional = true, features = ["extension-module"] }
+pythonize = { workspace = true, optional = true }
+schemars = { workspace = true, optional = true, features = ["uuid1"] }
+strum = { workspace = true, features = ["derive"] }
+
+[dev-dependencies]
+itertools = { workspace = true }
+pyo3 = { workspace = true }
+rstest = { workspace = true }
+assert-json-diff = { workspace = true }
+
+[features]
+pyo3 = ["dep:pyo3", "dep:pythonize"]
+schemars = ["dep:schemars"]
+
+[[test]]
+name = "integration"
+path = "tests/lib.rs"
