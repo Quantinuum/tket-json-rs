@@ -2,8 +2,8 @@
 
 ## 0.8.2 (2026-03-16)
 
+Patch release loosening the dependency bound for `strum`.
 
-# `tket-json-rs` release notes
 
 ## 0.8.1 (2026-03-02)
 
