@@ -4,6 +4,7 @@
 
 Patch release loosening the dependency bound for `strum`.
 
+
 ## 0.8.1 (2026-03-02)
 
 ### Features
