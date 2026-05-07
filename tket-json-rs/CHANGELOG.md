@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.8.3 (2026-05-07)
+
+### Bug Fixes
+
+- Support loading commands with `null` arguments ([#185](https://github.com/Quantinuum/tket-json-rs/issues/185))
+
+
 ## 0.8.2 (2026-03-16)
 
 Patch release loosening the dependency bound for `strum`.
