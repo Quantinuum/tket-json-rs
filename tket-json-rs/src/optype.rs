@@ -9,7 +9,10 @@ use serde::{Deserialize, Serialize};
 use strum::EnumString;
 
 /// Operation types in a quantum circuit.
-#[cfg_attr(feature = "pyo3", pyclass(name = "RsOpType", eq, eq_int))]
+#[cfg_attr(
+    feature = "pyo3",
+    pyclass(name = "RsOpType", eq, eq_int, from_py_object)
+)]
 #[derive(
     Deserialize,
     Serialize,
