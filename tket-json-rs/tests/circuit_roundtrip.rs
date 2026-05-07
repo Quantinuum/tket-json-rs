@@ -1,7 +1,8 @@
 //! Roundtrip tests
 use assert_json_diff::assert_json_eq;
 use rstest::rstest;
-use serde_json::Value;
+use serde_json::{json, Value};
+use tket_json_rs::register::ElementId;
 use tket_json_rs::SerialCircuit;
 
 const SIMPLE: &str = include_str!("data/circuit/simple.json");
@@ -52,4 +53,49 @@ fn roundtrip(#[case] json: &str, #[case] num_commands: usize) {
     let reser: SerialCircuit = serde_json::from_value(reencoded_json).unwrap();
 
     assert_eq!(ser, reser);
+}
+
+/// pytket sometimes emits a "null" value for commands with no arguments, so we
+/// treat "null" as equivalent to an empty list.
+#[rstest]
+fn commands_with_no_args() {
+    let circuit_json = json!({
+        "bits": [],
+        "commands": [
+            {
+                "args": null,
+                "op": {
+                    "data": "",
+                    "signature": [],
+                    "type": "Barrier"
+                }
+            },
+            {
+                "args": [],
+                "op": {
+                    "data": "",
+                    "signature": [],
+                    "type": "Barrier"
+                }
+            },
+            {
+                "args": [["q", [0]]],
+                "op": {
+                    "type": "H"
+                }
+            }
+        ],
+        "implicit_permutation": [],
+        "phase": "0",
+        "qubits": [["q", [0]]]
+    });
+
+    let circuit: SerialCircuit = serde_json::from_value(circuit_json).unwrap();
+
+    assert!(circuit.commands[0].args.is_empty());
+    assert!(circuit.commands[1].args.is_empty());
+    assert_eq!(
+        circuit.commands[2].args,
+        vec![ElementId("q".to_string(), vec![0])]
+    );
 }
