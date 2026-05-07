@@ -8,7 +8,7 @@ use crate::register::{Bit, BitRegister, ElementId, Qubit};
 
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 
 /// A gate defined by a circuit.
 ///
@@ -191,10 +191,22 @@ pub struct Command<P = String> {
     /// The arguments to the operation.
     ///
     /// May correspond to either [`Qubit`]s or [`Bit`]s, depending on the operation.
+    #[serde(deserialize_with = "deserialize_command_args")]
     pub args: Vec<ElementId>,
     /// Operation group identifier.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub opgroup: Option<String>,
+}
+
+/// Deserialize the arguments of a command.
+///
+/// pytket sometimes emits a "null" value for commands with no arguments, so we
+/// treat "null" as equivalent to an empty list.
+fn deserialize_command_args<'de, D>(deserializer: D) -> Result<Vec<ElementId>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    Ok(Option::<Vec<ElementId>>::deserialize(deserializer)?.unwrap_or_default())
 }
 
 /// A classic basis state permutation.
